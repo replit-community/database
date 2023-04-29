@@ -1,0 +1,14 @@
+-   [ ] initialize mongodb
+
+-   [ ] authentication
+
+    -   [ ] sign into account
+    -   [ ] log out of account
+
+-   [ ] bin management
+
+    -   [ ] create bin
+    -   [ ] delete bin
+    -   [ ] update bin
+    -   [ ] update bin dat
+    -   [ ] manage API keys

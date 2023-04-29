@@ -1,19 +1,25 @@
 {
-  "name": "replit-database",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "fastify": "^4.17.0",
-    "fluent-json-schema": "^4.1.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.4"
-  }
+    "name": "replit-database",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsup ./index.ts --clean",
+        "start": "npm run build && node ./dist/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@fastify/mongodb": "^7.0.0",
+        "dotenv": "^16.0.3",
+        "fastify": "^4.17.0",
+        "fluent-json-schema": "^4.1.0",
+        "mongoose": "^7.1.0"
+    },
+    "devDependencies": {
+        "tsup": "^6.7.0",
+        "typescript": "^5.0.4"
+    }
 }
