@@ -1,4 +1,5 @@
--   [ ] initialize mongodb
+-   [x] initialize mongodb
+-   [ ] connect to mongodb
 
 -   [ ] authentication
 

@@ -5,8 +5,11 @@
     "main": "index.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "dev:ts": "tsup ./index.ts --watch",
+        "dev:js": "nodemon ./dist/index.js",
+        "dev": "concurrently --kill-others 'npm:dev:*'",
         "build": "tsup ./index.ts --clean",
-        "start": "npm run build && node ./dist/index.js"
+        "start": "node ./dist/index.js"
     },
     "keywords": [],
     "author": "",
@@ -19,6 +22,8 @@
         "mongoose": "^7.1.0"
     },
     "devDependencies": {
+        "concurrently": "^8.0.1",
+        "nodemon": "^2.0.22",
         "tsup": "^6.7.0",
         "typescript": "^5.0.4"
     }
