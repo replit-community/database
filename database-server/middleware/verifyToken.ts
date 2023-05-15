@@ -16,7 +16,7 @@ export const verifyToken: Middleware = async (ctx, next) => {
     }
 
     // verify token & ensure user exists
-    const decoded = verify(token, `${process.env.JWT_SECRET}`).toString();
+    const decoded = verify("token", `${process.env.JWT_SECRET}`).toString();
     const user = await User.findOne({ _id: decoded });
     if (!user) {
         ctx.status = 404;

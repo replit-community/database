@@ -1,10 +1,11 @@
 import type Router from "@koa/router";
-import { z } from "zod";
 import { compare } from "bcrypt-ts";
 import { sign } from "jsonwebtoken";
+import { z } from "zod";
+
 import { parseSchema } from "middleware/parseSchema";
-import { User } from "models/User";
 import { MiddlewareResponse } from "middleware/types";
+import { User } from "models/User";
 
 const bodySchema = z.object({
     username: z.string(),
