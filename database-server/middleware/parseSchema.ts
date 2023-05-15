@@ -2,9 +2,10 @@ import type { Middleware } from "koa";
 import { z } from "zod";
 
 import type { MiddlewareResponse } from "./types";
+import type { State } from "api/types";
 
 export const parseSchema =
-    (schema: z.ZodObject<any>): Middleware =>
+    (schema: z.ZodObject<any>): Middleware<State> =>
     async (ctx, next) => {
         const result = schema.safeParse(ctx.request.body);
         if (!result.success) {

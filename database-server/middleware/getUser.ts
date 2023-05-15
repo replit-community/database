@@ -1,14 +1,15 @@
-import { Middleware } from "koa";
+import type { Middleware } from "koa";
 import { verify } from "jsonwebtoken";
 
-import { MiddlewareResponse, USER } from "./types";
+import type { MiddlewareResponse } from "./types";
+import type { State } from "api/types";
 import { User } from "models/User";
 
 /**
  * Ensure that a token is valid
  * Also saves user into application state
  */
-export const getUser: Middleware = async (ctx, next) => {
+export const getUser: Middleware<State> = async (ctx, next) => {
     const token = ctx.cookies.get("token");
     if (!token) {
         ctx.status = 403;
@@ -50,6 +51,6 @@ export const getUser: Middleware = async (ctx, next) => {
         return;
     }
 
-    ctx.state[USER] = user;
+    ctx.state.user = user;
     await next();
 };

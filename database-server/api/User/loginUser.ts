@@ -3,8 +3,9 @@ import { compare } from "bcrypt-ts";
 import { sign } from "jsonwebtoken";
 import { z } from "zod";
 
+import type { MiddlewareResponse } from "middleware/types";
+import type { State } from "api/types";
 import { parseSchema } from "middleware/parseSchema";
-import { MiddlewareResponse } from "middleware/types";
 import { User } from "models/User";
 
 const bodySchema = z.object({
@@ -14,7 +15,7 @@ const bodySchema = z.object({
 
 type IBodySchema = z.infer<typeof bodySchema>;
 
-export const loginUser = (router: Router) => {
+export const loginUser = (router: Router<State>) => {
     router.post("/user/login", parseSchema(bodySchema), async (ctx) => {
         const body = ctx.state.body as IBodySchema;
 

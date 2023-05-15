@@ -1,9 +1,11 @@
 import type Router from "@koa/router";
+
 import type { MiddlewareResponse } from "middleware/types";
+import type { State } from "api/types";
 import { getUser } from "middleware/getUser";
 import { Bin } from "models/Bin";
 
-export const createBin = (router: Router) => {
+export const createBin = (router: Router<State>) => {
     router.post("/bin", getUser, async (ctx) => {
         // TODO: limit the number of bins you can create
 

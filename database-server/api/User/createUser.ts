@@ -2,9 +2,10 @@ import type Router from "@koa/router";
 import { z } from "zod";
 import { genSalt, hash } from "bcrypt-ts";
 
+import type { MiddlewareResponse } from "middleware/types";
+import type { State } from "api/types";
 import { parseSchema } from "middleware/parseSchema";
 import { User } from "models/User";
-import type { MiddlewareResponse } from "middleware/types";
 
 const bodySchema = z.object({
     username: z.string().min(5).max(40),
@@ -13,7 +14,7 @@ const bodySchema = z.object({
 
 type IBodySchema = z.infer<typeof bodySchema>;
 
-export const createUser = (router: Router) => {
+export const createUser = (router: Router<State>) => {
     router.post("/user", parseSchema(bodySchema), async (ctx) => {
         const body = ctx.state.body as IBodySchema;
 

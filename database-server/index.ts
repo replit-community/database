@@ -5,13 +5,13 @@ import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import mongoose from "mongoose";
 
-import { registerRoutes } from "api";
+import { createRouter } from "api";
 
 const PORT = 3000;
 
 async function main() {
     const app = new Koa();
-    const router = new Router();
+    const router = createRouter();
 
     app.keys = [`${process.env.COOKIE_SECRET}`];
 
@@ -19,9 +19,6 @@ async function main() {
     await mongoose.connect(
         `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@repl-db-cluster-0.g7ydqoh.mongodb.net/?retryWrites=true&w=majority`
     );
-
-    // register routes & other middleware
-    registerRoutes(router);
 
     app.use(bodyParser());
     app.use(router.routes());

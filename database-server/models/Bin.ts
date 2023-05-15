@@ -11,7 +11,7 @@ interface IApiKey {
     allowedHosts: string[];
 }
 
-interface IBin {
+export interface IBin {
     user: Schema.Types.ObjectId;
     title: string;
     description: string;
