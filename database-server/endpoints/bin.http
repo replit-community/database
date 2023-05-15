@@ -1,20 +1,34 @@
 ### Create a new bin
 POST http://localhost:3000/bin
 
-### Get bin data
-GET http://localhost:3000/bin/64625ae60be82d87504792f6
+### Get bin
+GET http://localhost:3000/bin/6462a2c65b7df0f361944b8a
 
 ### Update bin metadata (not keys)
-PUT http://localhost:3000/bin/64625ae60be82d87504792f6
+PUT http://localhost:3000/bin/6462a2c65b7df0f361944b8a
 Content-Type: application/json
 
 { 
-    "title": "Hello", 
-    "description": "lmao" 
+    "title": "Testing Grounds", 
+    "description": "Testing this ultra cool bin"
 }
 
 ### Get all user bins
 GET http://localhost:3000/bins
 
 ### Delete a specific bin
-DELETE http://localhost:3000/bin/6461ab4871036bcdc3c6d5c5
+DELETE http://localhost:3000/bin/64625ae60be82d87504792f6
+
+### Create API Key
+POST http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key
+
+### Delete API Key
+DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/9299ffc9043fd627d023578369e617b509d170ce
+
+### Update API Key
+PUT http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/ee7210571c638041869bea4e91b5fd079261b501
+Content-Type: application/json
+
+{
+    "allowedHosts": ["https://replit.com"]
+}

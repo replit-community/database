@@ -19,8 +19,16 @@ export const setBinPath = (router: AppRouter) => {
             const body = ctx.state.body;
             const bin = ctx.state.bin;
 
+            // save all keys to bin data
             for (const [key, value] of Object.entries(body)) {
-                bin.data[key] = value;
+                try {
+                    bin.data[key] = JSON.stringify(value);
+                } catch {
+                    ctx.throw(
+                        500,
+                        `Failed to stringify bin data with key ${key}`
+                    );
+                }
             }
 
             await bin.save();

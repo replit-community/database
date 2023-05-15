@@ -7,5 +7,6 @@ export const deleteBin = (router: AppRouter) => {
     router.delete("/bin/:id", getUser, getBin, async (ctx) => {
         await Bin.deleteOne({ _id: ctx.params.id });
         ctx.status = 200;
+        ctx.body = "Deleted bin";
     });
 };

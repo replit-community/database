@@ -1,6 +1,7 @@
 import type { AppContext, AppRouter } from "api/types";
 import { getBin } from "middleware/getBin";
 import { getUser } from "middleware/getUser";
+import { parseSchema } from "middleware/parseSchema";
 import { IPermission } from "models/Bin";
 import { z } from "zod";
 
@@ -14,6 +15,7 @@ type IBodySchema = z.infer<typeof bodySchema>;
 export const updateApiKey = (router: AppRouter) => {
     router.put(
         "/bin/:id/key/:apiKey",
+        parseSchema(bodySchema),
         getUser,
         getBin,
         (ctx: AppContext<{ body: IBodySchema }>) => {
