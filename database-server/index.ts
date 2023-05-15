@@ -7,6 +7,8 @@ import mongoose from "mongoose";
 
 import { registerRoutes } from "api";
 
+const PORT = 3000;
+
 async function main() {
     const app = new Koa();
     const router = new Router();
@@ -26,7 +28,8 @@ async function main() {
     app.use(router.allowedMethods());
 
     // start server
-    app.listen(3000);
+    app.listen(PORT);
+    console.log(`started database-server on port ${PORT}`);
 }
 
 main();

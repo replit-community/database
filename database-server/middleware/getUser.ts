@@ -1,27 +1,39 @@
 import { Middleware } from "koa";
 import { verify } from "jsonwebtoken";
-import { User } from "models/User";
-import { MiddlewareResponse } from "./types";
 
-export const verifyToken: Middleware = async (ctx, next) => {
+import type { MiddlewareResponse } from "./types";
+import { User } from "models/User";
+
+/**
+ * Ensure that a token is valid
+ * Also saves user into application state
+ */
+export const getUser: Middleware = async (ctx, next) => {
     const token = ctx.cookies.get("token");
     if (!token) {
         ctx.status = 403;
         ctx.body = {
             success: false,
-            message: "Missing user token",
+            message: "Missing token",
         } satisfies MiddlewareResponse;
 
         return;
     }
 
     // verify token & ensure user exists
-    const decoded = verify("token", `${process.env.JWT_SECRET}`);
-    if (typeof decoded === "string") {
+    let decoded;
+    let errorFlag = false;
+    try {
+        decoded = verify(token, `${process.env.JWT_SECRET}`);
+    } catch {
+        errorFlag = true;
+    }
+
+    if (!decoded || typeof decoded === "string" || errorFlag) {
         ctx.status = 403;
         ctx.body = {
             success: false,
-            message: "Invalid user token",
+            message: "Invalid token",
         } satisfies MiddlewareResponse;
 
         return;

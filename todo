@@ -4,12 +4,12 @@
 -   [x] authentication
 
     -   [x] sign into account
-    -   [ ] log out of account
+    -   [x] log out of account
 
 -   [ ] bin management
 
     -   [ ] create bin
     -   [ ] delete bin
     -   [ ] update bin
-    -   [ ] update bin dat
+    -   [ ] update bin data (create, delete, update)
     -   [ ] manage API keys

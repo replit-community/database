@@ -19,3 +19,7 @@ Content-Type: application/json
 ### 
 
 GET http://localhost:3000/user/logout
+
+###
+
+POST http://localhost:3000/bin
