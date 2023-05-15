@@ -24,7 +24,7 @@ export const updateBin = (router: AppRouter) => {
             const bin = ctx.state.bin;
             ctx.assert(body && bin, 500);
 
-            // save bin
+            // update & save bin
             body.title && (bin.title = body.title);
             body.description && (bin.description = body.description);
             await bin.save();
