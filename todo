@@ -8,8 +8,8 @@
 
 -   [ ] bin management
 
-    -   [ ] create bin
-    -   [ ] delete bin
-    -   [ ] update bin
+    -   [x] create bin
+    -   [x] delete bin
+    -   [x] update bin
     -   [ ] update bin data (create, delete, update)
     -   [ ] manage API keys

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { AppRouter } from "api/types";
+import type { AppContext, AppRouter } from "api/types";
 import { getUser } from "middleware/getUser";
 import { getBin } from "middleware/getBin";
 import { parseSchema } from "middleware/parseSchema";
@@ -12,20 +12,22 @@ const bodySchema = z.object({
 
 type IBodySchema = z.infer<typeof bodySchema>;
 
-export const updateBin = (router: AppRouter<{ body: IBodySchema }>) => {
+export const updateBin = (router: AppRouter) => {
     router.put(
         "/bin/:id",
         parseSchema(bodySchema),
         getUser,
         getBin,
-        async (ctx) => {
+        async (ctx: AppContext<{ body: IBodySchema }>) => {
             // save title & description
             const body = ctx.state.body;
-            const bin = ctx.state.bin!;
-            if (bin) {
-                body.title && bin.set("title", body.title);
-                body.description && bin.set("description", body.description);
-            }
+            const bin = ctx.state.bin;
+            ctx.assert(body && bin, 500);
+
+            // save bin
+            body.title && (bin.title = body.title);
+            body.description && (bin.description = body.description);
+            await bin.save();
 
             ctx.status = 200;
             ctx.body = "Successfully updated bin";

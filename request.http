@@ -1,38 +1,29 @@
+### Create a new user
 POST http://localhost:3000/user
 Content-Type: application/json
+{ "username": "phamn23", "password": "Hello World"}
 
-{
-    "username": "phamn23",
-    "password": "Hello World"
-}
-
-### 
-
+### Login user
 POST http://localhost:3000/user/login
 Content-Type: application/json
+{ "username": "phamn23", "password": "Hello World" }
 
-{
-    "username": "phamn23",
-    "password": "Hello World"
-}
-
-### 
-
+### Logout user
 GET http://localhost:3000/user/logout
 
-###
-
+### Create a new bin
 POST http://localhost:3000/bin
 
-### 
-
+### Get bin data
 GET http://localhost:3000/bin/64625ae60be82d87504792f6
 
+### Update bin metadata (not keys)
+PUT http://localhost:3000/bin/64625ae60be82d87504792f6
+Content-Type: application/json
+{ "title": "Hello", "description": "lmao" }
 
-### 
-
+### Get all user bins
 GET http://localhost:3000/bins
 
-### 
-
+### Delete a specific bin
 DELETE http://localhost:3000/bin/6461ab4871036bcdc3c6d5c5

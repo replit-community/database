@@ -1,5 +1,6 @@
 import { AppContext, AppRouter } from "api/types";
 import { getUser } from "middleware/getUser";
+import { getBin } from "middleware/getBin";
 import { Bin } from "models/Bin";
 
 export const getBins = (router: AppRouter) => {
@@ -7,5 +8,10 @@ export const getBins = (router: AppRouter) => {
         const bins = await Bin.find({ user: ctx.state.user?._id });
         ctx.status = 200;
         ctx.body = bins;
+    });
+
+    router.get("/bin/:id", getUser, getBin, (ctx) => {
+        ctx.status = 200;
+        ctx.body = ctx.state.bin;
     });
 };

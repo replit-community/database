@@ -7,7 +7,6 @@ import { Bin } from "models/Bin";
 export const createBin = (router: AppRouter) => {
     router.post("/bin", getUser, async (ctx) => {
         // TODO: limit the number of bins you can create
-
         const bin = await new Bin({
             user: ctx.state.user,
             title: "Untitled Bin",

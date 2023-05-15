@@ -6,15 +6,19 @@ import { deleteBin } from "./Bin/deleteBin";
 import { createUser } from "./User/createUser";
 import { loginUser } from "./User/loginUser";
 import { logoutUser } from "./User/logoutUser";
-import { getBinById } from "./Bin/getBinById";
 import { getBins } from "./Bin/getBins";
+import { updateBin } from "./Bin/updateBin";
 
 const api = [
     // bin methods
     createBin,
-    deleteBin,
-    getBinById,
     getBins,
+    updateBin,
+    deleteBin,
+
+    // bin api key methods
+
+    // bin data methods
 
     // user methods
     createUser,

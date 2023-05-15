@@ -11,5 +11,5 @@ export interface State {
 }
 
 export type AppMiddleware = Middleware<State>;
-export type AppContext = ParameterizedContext<State>;
-export type AppRouter<T = void> = Router<State & T, AppContext>;
+export type AppContext<T = void> = ParameterizedContext<T & State>;
+export type AppRouter = Router<State, AppContext>;
