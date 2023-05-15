@@ -1,16 +1,32 @@
-import type { AppRouter } from "api/types";
+import type { AppContext, AppRouter } from "api/types";
 import { getBin } from "middleware/getBin";
 import { getUser } from "middleware/getUser";
 
 export const deleteApiKey = (router: AppRouter) => {
-    router.delete("/bin/:id/key/:apiKey", getUser, getBin, (ctx) => {
-        const apiKey = ctx.params.apiKey;
-        const bin = ctx.state.bin;
+    router.delete(
+        "/bin/:id/key/:apiKey",
+        getUser,
+        getBin,
+        async (ctx: AppContext) => {
+            const apiKey = ctx.params.apiKey;
+            const bin = ctx.state.bin;
 
-        bin.apiKeys = bin.apiKeys.filter(({ key }) => key !== apiKey);
-        bin.save();
+            // compare keys to param & filter them
+            const filteredApiKeys = bin.apiKeys.filter(
+                ({ key }) => key !== apiKey
+            );
 
-        ctx.status = 200;
-        ctx.body = "Deleted API key";
-    });
+            ctx.assert(
+                filteredApiKeys.length === bin.apiKeys.length - 1,
+                404,
+                "API key does not exist"
+            );
+
+            bin.apiKeys = filteredApiKeys;
+            bin.save();
+
+            ctx.status = 200;
+            ctx.body = "Deleted API key";
+        }
+    );
 };

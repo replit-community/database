@@ -24,7 +24,7 @@ export const createUser = (router: AppRouter) => {
             ctx.assert(!exists, 403, "User already exists");
 
             // hash password
-            const salt = await genSalt(10);
+            const salt = await genSalt();
             const password = await hash(body.password, salt);
 
             // save user

@@ -1,11 +1,12 @@
 import type { Middleware, ParameterizedContext } from "koa";
 import type Router from "@koa/router";
-import type { IBin } from "models/Bin";
+import type { IApiKey, IBin } from "models/Bin";
 import type { IUser } from "models/User";
 import type { HydratedDocument } from "mongoose";
 
 export interface AppState {
     bin: HydratedDocument<IBin>;
+    apiKey: IApiKey;
     user: HydratedDocument<IUser>;
     body: Record<string, unknown>;
 }

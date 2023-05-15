@@ -5,7 +5,7 @@ import { User } from "models/User";
 
 /**
  * Ensure that a token is valid
- * Also saves user into application state
+ * Also saves user into app state
  */
 export const getUser: AppMiddleware = async (ctx: AppContext, next) => {
     const token = ctx.cookies.get("token");
