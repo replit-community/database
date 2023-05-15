@@ -9,7 +9,7 @@ export const getBin: AppMiddleware = async (ctx: AppContext, next) => {
     const bin = await Bin.findById(ctx.params.id);
     ctx.assert(bin, 404, "Bin does not exist");
     ctx.assert(
-        bin.user.toString() == String(ctx.state.user?._id),
+        bin.user.toString() == ctx.state.user._id.toString(),
         403,
         "Bin does not belong to you"
     );

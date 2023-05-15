@@ -5,11 +5,11 @@ import type { IUser } from "models/User";
 import type { HydratedDocument } from "mongoose";
 
 export interface AppState {
-    bin?: HydratedDocument<IBin>;
-    user?: HydratedDocument<IUser>;
-    body?: Record<string, unknown>;
+    bin: HydratedDocument<IBin>;
+    user: HydratedDocument<IUser>;
+    body: Record<string, unknown>;
 }
 
-export type AppMiddleware = Middleware<AppState>;
-export type AppContext<T = void> = ParameterizedContext<T & AppState>;
+export type AppMiddleware<T = void> = Middleware<AppState & T>;
+export type AppContext<T = void> = ParameterizedContext<AppState & T>;
 export type AppRouter = Router<AppState, AppContext>;

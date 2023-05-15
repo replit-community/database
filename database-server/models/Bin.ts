@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
-enum IPermission {
+export enum IPermission {
     READ = "READ",
     WRITE = "WRITE",
 }
 
-interface IApiKey {
+export interface IApiKey {
     key: string;
     permissions: Array<IPermission>;
     allowedHosts: string[];

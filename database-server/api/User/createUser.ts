@@ -13,19 +13,23 @@ const bodySchema = z.object({
 type IBodySchema = z.infer<typeof bodySchema>;
 
 export const createUser = (router: AppRouter) => {
-    router.post("/user", parseSchema(bodySchema), async (ctx: AppContext) => {
-        const body = ctx.state.body as IBodySchema;
+    router.post(
+        "/user",
+        parseSchema(bodySchema),
+        async (ctx: AppContext<{ body: IBodySchema }>) => {
+            const body = ctx.state.body;
 
-        // check if user exists
-        const exists = await User.exists({ username: body.username });
-        ctx.assert(!exists, 403, "User already exists");
+            // check if user exists
+            const exists = await User.exists({ username: body.username });
+            ctx.assert(!exists, 403, "User already exists");
 
-        // hash password
-        const salt = await genSalt(10);
-        const password = await hash(body.password, salt);
+            // hash password
+            const salt = await genSalt(10);
+            const password = await hash(body.password, salt);
 
-        // save user
-        await new User({ username: body.username, password }).save();
-        ctx.status = 200;
-    });
+            // save user
+            await new User({ username: body.username, password }).save();
+            ctx.status = 200;
+        }
+    );
 };
