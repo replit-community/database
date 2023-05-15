@@ -24,6 +24,14 @@ GET http://localhost:3000/user/logout
 
 POST http://localhost:3000/bin
 
+### 
+
+GET http://localhost:3000/bin/64625ae60be82d87504792f6
+
+
+### 
+
+GET http://localhost:3000/bins
 
 ### 
 
