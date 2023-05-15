@@ -23,3 +23,8 @@ GET http://localhost:3000/user/logout
 ###
 
 POST http://localhost:3000/bin
+
+
+### 
+
+DELETE http://localhost:3000/bin/6461ab4871036bcdc3c6d5c5

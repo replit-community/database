@@ -1,27 +1,17 @@
-import type { Middleware } from "koa";
 import { verify } from "jsonwebtoken";
 
-import type { MiddlewareResponse } from "./types";
-import type { State } from "api/types";
+import type { AppContext, AppMiddleware } from "api/types";
 import { User } from "models/User";
 
 /**
  * Ensure that a token is valid
  * Also saves user into application state
  */
-export const getUser: Middleware<State> = async (ctx, next) => {
+export const getUser: AppMiddleware = async (ctx: AppContext, next) => {
     const token = ctx.cookies.get("token");
-    if (!token) {
-        ctx.status = 403;
-        ctx.body = {
-            success: false,
-            message: "Missing token",
-        } satisfies MiddlewareResponse;
+    ctx.assert(token, 403, "Missing token");
 
-        return;
-    }
-
-    // verify token & ensure user exists
+    // decode token
     let decoded;
     let errorFlag = false;
     try {
@@ -30,27 +20,16 @@ export const getUser: Middleware<State> = async (ctx, next) => {
         errorFlag = true;
     }
 
-    if (!decoded || typeof decoded === "string" || errorFlag) {
-        ctx.status = 403;
-        ctx.body = {
-            success: false,
-            message: "Invalid token",
-        } satisfies MiddlewareResponse;
+    // ensure token is valid
+    ctx.assert(
+        decoded && typeof decoded !== "string" && !errorFlag,
+        403,
+        "Invalid token"
+    );
 
-        return;
-    }
-
-    const user = await User.findOne({ _id: decoded._id.toString() });
-    if (!user) {
-        ctx.status = 404;
-        ctx.body = {
-            success: false,
-            message: "User does not exist",
-        } satisfies MiddlewareResponse;
-
-        return;
-    }
-
+    // ensure user exists & save it to app state
+    const user = await User.findById(decoded._id.toString());
+    ctx.assert(user, 404, "User does not exist");
     ctx.state.user = user;
     await next();
 };

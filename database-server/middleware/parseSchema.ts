@@ -1,25 +1,22 @@
-import type { Middleware } from "koa";
 import { z } from "zod";
 
-import type { MiddlewareResponse } from "./types";
-import type { State } from "api/types";
+import type { AppContext, AppMiddleware } from "api/types";
 
 export const parseSchema =
-    (schema: z.ZodObject<any>): Middleware<State> =>
-    async (ctx, next) => {
+    (schema: z.ZodObject<any>): AppMiddleware =>
+    async (ctx: AppContext, next) => {
+        // get result & construct error message, if available
         const result = schema.safeParse(ctx.request.body);
-        if (!result.success) {
-            // return stringified zod error
-            ctx.status = 400;
-            ctx.body = {
-                success: false,
-                message: result.error.issues
-                    .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
-                    .join("; "),
-            } satisfies MiddlewareResponse;
+        const message =
+            "error" in result
+                ? result.error.issues
+                      .map(
+                          ({ path, message }) => `${path.join(".")}: ${message}`
+                      )
+                      .join("; ")
+                : "Failed to parse body";
 
-            return;
-        }
+        ctx.assert(result.success, 400, message);
 
         // save result into state
         ctx.state.body = result.data;

@@ -15,7 +15,7 @@ export interface IBin {
     user: Schema.Types.ObjectId;
     title: string;
     description: string;
-    keys: IApiKey[];
+    apiKeys: IApiKey[];
     data: Record<string, unknown>;
 }
 
@@ -33,7 +33,7 @@ const binSchema = new Schema<IBin>({
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true },
     description: String,
-    keys: { type: [apiKeySchema], required: true },
+    apiKeys: { type: [apiKeySchema], required: true },
     data: Object,
 });
 

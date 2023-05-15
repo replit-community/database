@@ -1,10 +1,8 @@
-import type Router from "@koa/router";
 import { compare } from "bcrypt-ts";
 import { sign } from "jsonwebtoken";
 import { z } from "zod";
 
-import type { MiddlewareResponse } from "middleware/types";
-import type { State } from "api/types";
+import type { AppRouter, AppContext } from "api/types";
 import { parseSchema } from "middleware/parseSchema";
 import { User } from "models/User";
 
@@ -15,49 +13,34 @@ const bodySchema = z.object({
 
 type IBodySchema = z.infer<typeof bodySchema>;
 
-export const loginUser = (router: Router<State>) => {
-    router.post("/user/login", parseSchema(bodySchema), async (ctx) => {
-        const body = ctx.state.body as IBodySchema;
+export const loginUser = (router: AppRouter) => {
+    router.post(
+        "/user/login",
+        parseSchema(bodySchema),
+        async (ctx: AppContext) => {
+            const body = ctx.state.body as IBodySchema;
 
-        // get user
-        const user = await User.findOne({ username: body.username });
-        if (!user) {
-            ctx.status = 404;
-            ctx.body = {
-                success: false,
-                message: "User does not exist",
-            } satisfies MiddlewareResponse;
+            // get user
+            const user = await User.findOne({ username: body.username });
+            ctx.assert(user, 404, "User does not exist");
 
-            return;
+            // verify password
+            const validPassword = await compare(body.password, user.password);
+            ctx.assert(validPassword, 403, "Invalid password");
+
+            // sign JWT & save as server side cookie
+            const payload = {
+                _id: user._id.toString(),
+                username: user.username,
+            };
+
+            const token = sign(payload, `${process.env.JWT_SECRET}`, {
+                expiresIn: "3 days",
+            });
+
+            ctx.cookies.set("token", token, { signed: true, httpOnly: true });
+            ctx.status = 200;
+            ctx.body = "Successfully logged in";
         }
-
-        // verify password
-        const validPassword = await compare(body.password, user.password);
-        if (!validPassword) {
-            ctx.status = 403;
-            ctx.body = {
-                success: false,
-                message: "Invalid password",
-            } satisfies MiddlewareResponse;
-
-            return;
-        }
-
-        // sign JWT & save as server side cookie
-        const payload = {
-            _id: user._id.toString(),
-            username: user.username,
-        };
-
-        const token = sign(payload, `${process.env.JWT_SECRET}`, {
-            expiresIn: "3 days",
-        });
-
-        ctx.cookies.set("token", token, { signed: true, httpOnly: true });
-        ctx.status = 200;
-        ctx.body = {
-            success: true,
-            message: "Successfully logged in",
-        } satisfies MiddlewareResponse;
-    });
+    );
 };

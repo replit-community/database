@@ -1,34 +1,18 @@
-import type { Middleware } from "koa";
-
-import type { MiddlewareResponse } from "./types";
-import type { State } from "api/types";
+import type { AppContext, AppMiddleware } from "api/types";
 import { Bin } from "models/Bin";
 
 /**
  * Confirm that a bin actually belongs to user & get bin details
  * Requires an id parameter
  */
-export const getBin: Middleware<State> = async (ctx, next) => {
-    const bin = await Bin.findOne({ _id: ctx.params.id });
-    if (!bin) {
-        ctx.status = 404;
-        ctx.body = {
-            success: false,
-            message: "Bin does not exist",
-        } satisfies MiddlewareResponse;
-
-        return;
-    }
-
-    if (bin.user !== ctx.state.user?._id) {
-        ctx.status = 403;
-        ctx.body = {
-            success: false,
-            message: "Bin does not belong to you",
-        } satisfies MiddlewareResponse;
-
-        return;
-    }
+export const getBin: AppMiddleware = async (ctx: AppContext, next) => {
+    const bin = await Bin.findById(ctx.params.id);
+    ctx.assert(bin, 404, "Bin does not exist");
+    ctx.assert(
+        bin.user.toString() == String(ctx.state.user?._id),
+        403,
+        "Bin does not belong to you"
+    );
 
     ctx.state.bin = bin;
     await next();

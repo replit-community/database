@@ -1,9 +1,7 @@
-import type Router from "@koa/router";
 import { z } from "zod";
 import { genSalt, hash } from "bcrypt-ts";
 
-import type { MiddlewareResponse } from "middleware/types";
-import type { State } from "api/types";
+import type { AppRouter, AppContext } from "api/types";
 import { parseSchema } from "middleware/parseSchema";
 import { User } from "models/User";
 
@@ -14,21 +12,13 @@ const bodySchema = z.object({
 
 type IBodySchema = z.infer<typeof bodySchema>;
 
-export const createUser = (router: Router<State>) => {
-    router.post("/user", parseSchema(bodySchema), async (ctx) => {
+export const createUser = (router: AppRouter) => {
+    router.post("/user", parseSchema(bodySchema), async (ctx: AppContext) => {
         const body = ctx.state.body as IBodySchema;
 
         // check if user exists
         const exists = await User.exists({ username: body.username });
-        if (exists) {
-            ctx.status = 403;
-            ctx.body = {
-                success: false,
-                message: "User already exists",
-            } satisfies MiddlewareResponse;
-
-            return;
-        }
+        ctx.assert(!exists, 403, "User already exists");
 
         // hash password
         const salt = await genSalt(10);
@@ -36,11 +26,6 @@ export const createUser = (router: Router<State>) => {
 
         // save user
         await new User({ username: body.username, password }).save();
-
         ctx.status = 200;
-        ctx.body = {
-            success: true,
-            message: "Successfully created user",
-        } satisfies MiddlewareResponse;
     });
 };
