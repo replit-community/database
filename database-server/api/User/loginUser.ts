@@ -43,12 +43,16 @@ export const loginUser = (router: Router) => {
         }
 
         // sign JWT & save as server side cookie
-        const token = sign(user._id.toString(), `${process.env.JWT_SECRET}`, {
-            expiresIn: "2 days",
+        const payload = {
+            _id: user._id.toString(),
+            username: user.username,
+        };
+
+        const token = sign(payload, `${process.env.JWT_SECRET}`, {
+            expiresIn: "3 days",
         });
 
         ctx.cookies.set("token", token, { signed: true, httpOnly: true });
-
         ctx.status = 200;
         ctx.body = {
             success: true,

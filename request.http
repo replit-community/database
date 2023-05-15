@@ -15,3 +15,7 @@ Content-Type: application/json
     "username": "phamn23",
     "password": "Hello World"
 }
+
+### 
+
+GET http://localhost:3000/user/logout
