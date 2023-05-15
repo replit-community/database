@@ -1,9 +1,6 @@
 import { Schema, model } from "mongoose";
 
-// https://mongoosejs.com/docs/typescript.html
-// for guide to creating TS-enhanced models
-
-export interface IUser {
+interface IUser {
     username: string;
     password: string;
 }

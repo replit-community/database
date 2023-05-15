@@ -1,8 +1,8 @@
 {
-    "name": "replit-database",
+    "name": "database-server",
     "version": "1.0.0",
     "description": "",
-    "main": "index.ts",
+    "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev:ts": "tsup ./index.ts --watch",
@@ -15,13 +15,17 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@fastify/mongodb": "^7.0.0",
-        "dotenv": "^16.0.3",
-        "fastify": "^4.17.0",
-        "fluent-json-schema": "^4.1.0",
-        "mongoose": "^7.1.0"
+        "@koa/router": "^12.0.0",
+        "@types/koa-bodyparser": "^4.3.10",
+        "koa": "^2.14.2",
+        "koa-bodyparser": "^4.4.0",
+        "mongoose": "^7.1.1",
+        "zod": "^3.21.4"
     },
     "devDependencies": {
+        "@types/koa": "^2.13.6",
+        "@types/koa__router": "^12.0.0",
+        "@types/node": "^20.1.4",
         "concurrently": "^8.0.1",
         "nodemon": "^2.0.22",
         "tsup": "^6.7.0",
