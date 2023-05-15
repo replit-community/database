@@ -1,7 +1,7 @@
 import { Middleware } from "koa";
 import { verify } from "jsonwebtoken";
 
-import type { MiddlewareResponse } from "./types";
+import { MiddlewareResponse, USER } from "./types";
 import { User } from "models/User";
 
 /**
@@ -50,6 +50,6 @@ export const getUser: Middleware = async (ctx, next) => {
         return;
     }
 
-    ctx.state.user = user;
+    ctx.state[USER] = user;
     await next();
 };
