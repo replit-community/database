@@ -2,8 +2,12 @@ import { z } from "zod";
 
 import type { AppContext, AppMiddleware } from "api/types";
 
+/**
+ * Ensure payload conforms to a specific schema
+ * @param schema Zod body schema to use
+ */
 export const parseSchema =
-    (schema: z.ZodObject<any>): AppMiddleware =>
+    (schema: z.ZodObject<any> | z.ZodRecord<any>): AppMiddleware =>
     async (ctx: AppContext, next) => {
         // get result & construct error message, if available
         const result = schema.safeParse(ctx.request.body);

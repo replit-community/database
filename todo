@@ -12,4 +12,4 @@
     -   [x] delete bin
     -   [x] update bin
     -   [ ] update bin data (create, delete, update)
-    -   [ ] manage API keys
+    -   [x] manage API keys

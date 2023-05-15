@@ -19,35 +19,3 @@ Content-Type: application/json
 ### Logout user
 GET http://localhost:3000/user/logout
 
-
-
-
-### Create a new bin
-POST http://localhost:3000/bin
-
-### Get bin data
-GET http://localhost:3000/bin/64625ae60be82d87504792f6
-
-### Update bin metadata (not keys)
-PUT http://localhost:3000/bin/64625ae60be82d87504792f6
-Content-Type: application/json
-
-{ 
-    "title": "Hello", 
-    "description": "lmao" 
-}
-
-### Get all user bins
-GET http://localhost:3000/bins
-
-### Delete a specific bin
-DELETE http://localhost:3000/bin/6461ab4871036bcdc3c6d5c5
-
-### Create API Key
-POST http://localhost:3000/bin/64625ae60be82d87504792f6/key
-
-### Delete API Key
-DELETE http://localhost:3000/bin/64625ae60be82d87504792f6/key/23f04ec1236fad06c76a21089eda967e2572ce10
-
-### Update API Key
-PUT http://localhost:3000/bin/64625ae60be82d87504792f6/key/aa24328567205732df0ca7b9d8c425c2e8209a7c

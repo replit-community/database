@@ -6,7 +6,7 @@ import type { HydratedDocument } from "mongoose";
 
 export interface AppState {
     bin: HydratedDocument<IBin>;
-    apiKey: IApiKey;
+    binApiKey: IApiKey;
     user: HydratedDocument<IUser>;
     body: Record<string, unknown>;
 }
