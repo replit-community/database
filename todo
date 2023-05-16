@@ -16,7 +16,7 @@
 
 -   misc
 
-    -   [ ] confirm password
-    -   [ ] actually limit hosts/IPs
+    -   [x] confirm password
+    -   [ ] actually limit hostnames
 
 -   [ ] docker management

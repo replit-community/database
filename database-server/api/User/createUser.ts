@@ -5,10 +5,16 @@ import type { AppRouter, AppContext } from "api/types";
 import { parseSchema } from "middleware/parseSchema";
 import { User } from "models/User";
 
-const bodySchema = z.object({
-    username: z.string().min(5).max(40),
-    password: z.string(),
-});
+const bodySchema = z
+    .object({
+        username: z.string().min(5).max(40),
+        password: z.string(),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords don't match",
+        path: ["confirmPassword"],
+    });
 
 type IBodySchema = z.infer<typeof bodySchema>;
 

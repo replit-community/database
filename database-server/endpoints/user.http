@@ -4,7 +4,8 @@ Content-Type: application/json
 
 { 
     "username": "phamn23", 
-    "password": "Hello World"
+    "password": "Hello World",
+    "confirmPassword": "Hello World"
 }
 
 ### Login user
