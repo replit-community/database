@@ -11,6 +11,9 @@ import { updateApiKey } from "./Bin/apiKey/updateApiKey";
 import { createUser } from "./User/createUser";
 import { loginUser } from "./User/loginUser";
 import { logoutUser } from "./User/logoutUser";
+import { setBinPath } from "./Bin/methods/setBinPath";
+import { getBinPath } from "./Bin/methods/getBinPath";
+import { deleteBinPath } from "./Bin/methods/deleteBinPath";
 
 const api = [
     // bin methods
@@ -25,6 +28,9 @@ const api = [
     deleteApiKey,
 
     // bin data methods
+    setBinPath,
+    getBinPath,
+    deleteBinPath,
 
     // user methods
     createUser,

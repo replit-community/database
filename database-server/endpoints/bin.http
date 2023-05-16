@@ -2,10 +2,10 @@
 POST http://localhost:3000/bin
 
 ### Get bin
-GET http://localhost:3000/bin/6462a2c65b7df0f361944b8a
+GET http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b
 
 ### Update bin metadata (not keys)
-PUT http://localhost:3000/bin/6462a2c65b7df0f361944b8a
+PUT http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b
 Content-Type: application/json
 
 { 
@@ -17,10 +17,10 @@ Content-Type: application/json
 GET http://localhost:3000/bins
 
 ### Delete a specific bin
-DELETE http://localhost:3000/bin/64625ae60be82d87504792f6
+DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a
 
 ### Create API Key
-POST http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key
+POST http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key
 
 ### Delete API Key
 DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/9299ffc9043fd627d023578369e617b509d170ce
@@ -30,5 +30,6 @@ PUT http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/ee7210571c638041869be
 Content-Type: application/json
 
 {
-    "allowedHosts": ["https://replit.com"]
+    "allowedHosts": ["https://replit.com"],
+    "permissions": ["READ", "WRITE"]
 }

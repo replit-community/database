@@ -30,15 +30,15 @@ export const getBinPath = (router: AppRouter) => {
         requirePermissions([IPermission.READ]),
         (ctx) => {
             const prefix = ctx.params.prefix;
-            const bin = ctx.state.bin;
+            const data = ctx.state.bin.data;
 
             // find keys that start with prefix
-            const filteredData = Object.keys(bin.data).reduce(
+            const filteredData = Object.keys(data).reduce(
                 (acc, key) =>
                     key.startsWith(prefix)
                         ? {
                               ...acc,
-                              [key]: bin.data[key],
+                              [key]: data[key],
                           }
                         : acc,
                 {}

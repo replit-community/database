@@ -17,7 +17,7 @@ async function main() {
 
     // connect to MongoDB
     await mongoose.connect(
-        `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@repl-db-cluster-0.g7ydqoh.mongodb.net/?retryWrites=true&w=majority`
+        `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@repl-db-cluster-0.g7ydqoh.mongodb.net/replit-database?retryWrites=true&w=majority`
     );
 
     app.use(bodyParser());

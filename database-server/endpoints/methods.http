@@ -1,0 +1,26 @@
+### Set Key
+PUT http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/path
+Content-Type: application/json
+Authorization: Bearer c1e3048fc9dbcb9b552dd83857701c10f43e62b2
+
+{
+    "test": "Hello World",
+    "multipleKeys": "yippeee",
+    "hello world": "test"
+}
+
+### Get all keys
+GET http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/path
+Authorization: Bearer c1e3048fc9dbcb9b552dd83857701c10f43e62b2
+
+### Get key
+GET http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/path/test
+Authorization: Bearer c1e3048fc9dbcb9b552dd83857701c10f43e62b2
+
+### Get key with prefix
+GET http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/path/prefix/test
+Authorization: Bearer c1e3048fc9dbcb9b552dd83857701c10f43e62b2
+
+### Delete key 
+DELETE http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/path/test
+Authorization: Bearer c1e3048fc9dbcb9b552dd83857701c10f43e62b2

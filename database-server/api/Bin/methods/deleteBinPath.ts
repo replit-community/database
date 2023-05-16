@@ -15,8 +15,10 @@ export const deleteBinPath = (router: AppRouter) => {
             const path = ctx.params.path;
             const bin = ctx.state.bin;
 
+            ctx.assert(path in bin.data, 404, "Path does not exist");
+
             // delete path
-            path in bin && delete bin.data[ctx.params.path];
+            delete bin.data[ctx.params.path];
             await bin.save();
 
             ctx.status = 200;

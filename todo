@@ -11,5 +11,9 @@
     -   [x] create bin
     -   [x] delete bin
     -   [x] update bin
-    -   [ ] update bin data (create, delete, update)
+    -   [x] update bin data (create, delete, update)
     -   [x] manage API keys
+
+-   misc
+    -   [ ] confirm password
+    -   [ ] actually limit hosts/IPs

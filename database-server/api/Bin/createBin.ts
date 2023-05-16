@@ -1,5 +1,3 @@
-import type Router from "@koa/router";
-
 import type { AppRouter } from "api/types";
 import { getUser } from "middleware/getUser";
 import { Bin } from "models/Bin";

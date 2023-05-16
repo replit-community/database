@@ -21,16 +21,10 @@ export const setBinPath = (router: AppRouter) => {
 
             // save all keys to bin data
             for (const [key, value] of Object.entries(body)) {
-                try {
-                    bin.data[key] = JSON.stringify(value);
-                } catch {
-                    ctx.throw(
-                        500,
-                        `Failed to stringify bin data with key ${key}`
-                    );
-                }
+                bin.data[key] = value;
             }
 
+            bin.markModified("data");
             await bin.save();
 
             ctx.status = 200;
