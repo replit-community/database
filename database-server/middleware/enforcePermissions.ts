@@ -8,7 +8,7 @@ import { IPermission } from "models/Bin";
  * - Requires getBinWithKey before
  * @param permissions - Array of permissions needed to act on a given resource
  */
-export const requirePermissions =
+export const enforcePermissions =
     (permissions: Array<IPermission>): AppMiddleware =>
     async (ctx: AppContext, next) => {
         // validate preconditions

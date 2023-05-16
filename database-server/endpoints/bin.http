@@ -23,13 +23,13 @@ DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a
 POST http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key
 
 ### Delete API Key
-DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/9299ffc9043fd627d023578369e617b509d170ce
+DELETE http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key/9299ffc9043fd627d023578369e617b509d170ce
 
 ### Update API Key
-PUT http://localhost:3000/bin/6462a2c65b7df0f361944b8a/key/ee7210571c638041869bea4e91b5fd079261b501
+PUT http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key/c1e3048fc9dbcb9b552dd83857701c10f43e62b2
 Content-Type: application/json
 
 {
-    "allowedHosts": ["https://replit.com"],
+    "allowedIPs": ["127.0.0.1"],
     "permissions": ["READ", "WRITE"]
 }

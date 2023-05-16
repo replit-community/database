@@ -16,7 +16,7 @@ export const createApiKey = (router: AppRouter) => {
         bin.apiKeys.push({
             key: apiKey,
             permissions: [IPermission.READ, IPermission.WRITE],
-            allowedHosts: ["*"],
+            allowedIPs: ["*"],
         });
 
         bin.save();

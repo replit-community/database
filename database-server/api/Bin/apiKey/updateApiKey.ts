@@ -7,7 +7,7 @@ import { z } from "zod";
 
 const bodySchema = z.object({
     permissions: z.array(z.nativeEnum(IPermission)).optional(),
-    allowedHosts: z.array(z.string()).optional(),
+    allowedIPs: z.array(z.string()).optional(),
 });
 
 type IBodySchema = z.infer<typeof bodySchema>;
@@ -29,7 +29,7 @@ export const updateApiKey = (router: AppRouter) => {
 
             // set new permissions & allowed hosts
             body.permissions && (apiKey.permissions = body.permissions);
-            body.allowedHosts && (apiKey.allowedHosts = body.allowedHosts);
+            body.allowedIPs && (apiKey.allowedIPs = body.allowedIPs);
             bin.save();
 
             ctx.status = 200;

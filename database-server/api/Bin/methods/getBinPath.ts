@@ -1,13 +1,15 @@
 import type { AppRouter } from "api/types";
 import { getBinWithKey } from "middleware/getBinWithKey";
-import { requirePermissions } from "middleware/requirePermission";
+import { enforcePermissions } from "middleware/enforcePermissions";
+import { enforceIPs } from "middleware/enforceIPs";
 import { IPermission } from "models/Bin";
 
 export const getBinPath = (router: AppRouter) => {
     router.get(
         "/bin/:id/path",
         getBinWithKey,
-        requirePermissions([IPermission.READ]),
+        enforcePermissions([IPermission.READ]),
+        enforceIPs,
         (ctx) => {
             ctx.status = 200;
             ctx.body = ctx.state.bin.data;
@@ -17,7 +19,8 @@ export const getBinPath = (router: AppRouter) => {
     router.get(
         "/bin/:id/path/:path",
         getBinWithKey,
-        requirePermissions([IPermission.READ]),
+        enforcePermissions([IPermission.READ]),
+        enforceIPs,
         (ctx) => {
             ctx.status = 200;
             ctx.body = ctx.state.bin.data[ctx.params.path];
@@ -27,7 +30,8 @@ export const getBinPath = (router: AppRouter) => {
     router.get(
         "/bin/:id/path/prefix/:prefix",
         getBinWithKey,
-        requirePermissions([IPermission.READ]),
+        enforcePermissions([IPermission.READ]),
+        enforceIPs,
         (ctx) => {
             const prefix = ctx.params.prefix;
             const data = ctx.state.bin.data;

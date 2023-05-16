@@ -8,7 +8,7 @@ export enum IPermission {
 export interface IApiKey {
     key: string;
     permissions: Array<IPermission>;
-    allowedHosts: string[];
+    allowedIPs: string[];
 }
 
 export interface IBin {
@@ -22,7 +22,7 @@ export interface IBin {
 const apiKeySchema = new Schema<IApiKey>(
     {
         key: { type: String, required: true },
-        allowedHosts: { type: [String], required: true },
+        allowedIPs: { type: [String], required: true },
         permissions: {
             type: [String],
             enum: [IPermission.READ, IPermission.WRITE],
@@ -42,16 +42,6 @@ const binSchema = new Schema<IBin>(
         apiKeys: { type: [apiKeySchema], required: true },
         data: {
             type: Object,
-            // get: function (data: string) {
-            //     try {
-            //         return JSON.parse(data);
-            //     } catch (error) {
-            //         return data;
-            //     }
-            // },
-            // set: function (data: string) {
-            //     return JSON.stringify(data);
-            // },
             required: true,
         },
     },

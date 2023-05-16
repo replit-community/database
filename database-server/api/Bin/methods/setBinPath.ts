@@ -1,9 +1,11 @@
+import { z } from "zod";
+
 import type { AppContext, AppRouter } from "api/types";
 import { getBinWithKey } from "middleware/getBinWithKey";
 import { parseSchema } from "middleware/parseSchema";
-import { requirePermissions } from "middleware/requirePermission";
+import { enforcePermissions } from "middleware/enforcePermissions";
+import { enforceIPs } from "middleware/enforceIPs";
 import { IPermission } from "models/Bin";
-import { z } from "zod";
 
 const bodySchema = z.record(z.string(), z.any());
 
@@ -14,7 +16,8 @@ export const setBinPath = (router: AppRouter) => {
         "/bin/:id/path",
         parseSchema(bodySchema),
         getBinWithKey,
-        requirePermissions([IPermission.WRITE]),
+        enforcePermissions([IPermission.WRITE]),
+        enforceIPs,
         async (ctx: AppContext<{ body: IBodySchema }>) => {
             const body = ctx.state.body;
             const bin = ctx.state.bin;
