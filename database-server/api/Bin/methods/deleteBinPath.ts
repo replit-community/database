@@ -19,6 +19,7 @@ export const deleteBinPath = (router: AppRouter) => {
 
             // delete path
             delete bin.data[ctx.params.path];
+            bin.markModified("data");
             await bin.save();
 
             ctx.status = 200;
