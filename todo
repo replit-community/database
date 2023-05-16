@@ -15,5 +15,8 @@
     -   [x] manage API keys
 
 -   misc
+
     -   [ ] confirm password
     -   [ ] actually limit hosts/IPs
+
+-   [ ] docker management

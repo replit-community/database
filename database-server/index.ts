@@ -1,7 +1,6 @@
 import "dotenv/config";
 
 import Koa from "koa";
-import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import mongoose from "mongoose";
 
@@ -25,7 +24,7 @@ async function main() {
     app.use(router.allowedMethods());
 
     // start server
-    app.listen(PORT);
+    app.listen(PORT, "0.0.0.0");
     console.log(`started database-server on port ${PORT}`);
 }
 
