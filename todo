@@ -6,7 +6,7 @@
     -   [x] sign into account
     -   [x] log out of account
 
--   [ ] bin management
+-   [x] bin management
 
     -   [x] create bin
     -   [x] delete bin
@@ -19,4 +19,10 @@
     -   [x] confirm password
     -   [x] actually limit hostnames
 
--   [ ] docker management
+-   [ ] test methods with jest
+-   [ ] docker
+
+-   [ ] documentation
+    -   [ ] development on server
+    -   [ ] deploying server
+    -   [ ] interacting with database-node
