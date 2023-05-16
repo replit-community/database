@@ -13,6 +13,7 @@ class RequestBuilder {
     private path = "/";
     private method = Method.GET;
     private headers: Record<string, string> = {};
+    private query = new URLSearchParams();
     private body: Record<string, unknown> = {};
 
     /**
@@ -68,31 +69,55 @@ class RequestBuilder {
     }
 
     /**
-     * Set header name and value
-     * @param name Header name
+     * Set header key and value
+     * @param key Header key
      * @param value Header value
      * @returns Instance of builder
      */
-    header(name: string, value: string) {
-        this.headers[name] = value;
+    setHeader(key: string, value: string) {
+        this.headers[key] = value;
+
+        return this;
+    }
+
+    /**
+     * Set query key and value
+     * @param key Query key
+     * @param value Query value
+     * @returns Instance of builder
+     */
+    setQuery(key: string, value: string) {
+        this.query.set(key, value);
 
         return this;
     }
 
     /**
      * Set body key and value
-     * @param name Body key
+     * @param key Body key
      * @param value Body value
      * @returns Instance of builder
      */
-    set(name: string, value: string) {
+    setBody(key: string, value: string) {
         if (this.method === Method.GET) {
             throw new Error("Cannot add body to GET method");
         }
 
-        this.body[name] = value;
+        this.body[key] = value;
 
         return this;
+    }
+
+    /**
+     * Assemble the final URL that is fetched
+     * @returns Final URL
+     */
+    getURL() {
+        const path = this.path.startsWith("/") ? this.path : "/" + this.path;
+        const query = this.query.toString();
+        const url = `${baseUrl}${path}${query.length > 0 ? "?" + query : ""}`;
+
+        return url;
     }
 
     /**
@@ -110,11 +135,7 @@ class RequestBuilder {
             options.body = JSON.stringify(this.body);
         }
 
-        const groundedPath = this.path.startsWith("/")
-            ? this.path
-            : "/" + this.path;
-
-        return fetch(`${baseUrl}${groundedPath}`, options);
+        return fetch(this.getURL(), options);
     }
 }
 

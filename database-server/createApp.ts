@@ -33,20 +33,24 @@ export const createApp = async () => {
         app.use(router.allowedMethods());
     });
 
-    // start server
     const controller = new AbortController();
     const server = http.createServer(app.callback());
-    await new Promise((resolve) => {
-        server.listen(
-            {
-                host: "0.0.0.0",
-                port: PORT,
-                signal: controller.signal,
-            },
-            () => resolve(null)
-        );
-    });
 
+    // start server
+    try {
+        await new Promise((resolve, reject) => {
+            server.listen(
+                {
+                    host: "0.0.0.0",
+                    port: PORT,
+                    signal: controller.signal,
+                },
+                () => resolve(null)
+            );
+
+            server.once("error", (error) => reject(error));
+        });
+    } catch {}
     // dispose function
     return async () => {
         await mongoose.disconnect();

@@ -7,8 +7,8 @@ import { User } from "models/User";
  * Ensure that a token is valid and saves user into app state
  */
 export const getUser: AppMiddleware = async (ctx: AppContext, next) => {
-    const token = ctx.cookies.get("token");
-    ctx.assert(token, 403, "Missing token");
+    const token = ctx.request.query.token || ctx.cookies.get("token");
+    ctx.assert(token && typeof token === "string", 403, "Missing token");
 
     // decode token
     let decoded;

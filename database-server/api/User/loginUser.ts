@@ -40,7 +40,7 @@ export const loginUser = (router: AppRouter) => {
 
             ctx.cookies.set("token", token, { signed: true, httpOnly: true });
             ctx.status = 200;
-            ctx.body = "Successfully logged in";
+            ctx.body = token;
         }
     );
 };
