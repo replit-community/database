@@ -1,11 +1,11 @@
 ### Create a new bin
-POST http://localhost:3000/bin
+POST http://localhost:3000/api/v1/bin
 
 ### Get bin
-GET http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b
+GET http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b
 
 ### Update bin metadata (not keys)
-PUT http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b
+PUT http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b
 Content-Type: application/json
 
 { 
@@ -14,19 +14,19 @@ Content-Type: application/json
 }
 
 ### Get all user bins
-GET http://localhost:3000/bins
+GET http://localhost:3000/api/v1/bins
 
 ### Delete a specific bin
-DELETE http://localhost:3000/bin/6462a2c65b7df0f361944b8a
+DELETE http://localhost:3000/api/v1/bin/6462a2c65b7df0f361944b8a
 
 ### Create API Key
-POST http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key
+POST http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b/key
 
 ### Delete API Key
-DELETE http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key/9299ffc9043fd627d023578369e617b509d170ce
+DELETE http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b/key/9299ffc9043fd627d023578369e617b509d170ce
 
 ### Update API Key
-PUT http://localhost:3000/bin/6462bfc9f4ec647fd371bd5b/key/c1e3048fc9dbcb9b552dd83857701c10f43e62b2
+PUT http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b/key/c1e3048fc9dbcb9b552dd83857701c10f43e62b2
 Content-Type: application/json
 
 {
