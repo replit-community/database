@@ -21,12 +21,6 @@ describe("bin API key", () => {
     });
 
     afterAll(async () => {
-        // remove bin since we're done with it
-        await requestBuilder()
-            .delete(`/bin/${binId}`)
-            .setQuery("token", token)
-            .exec();
-
         if (disposeApp) {
             disposeApp();
         }
@@ -77,10 +71,31 @@ describe("bin API key", () => {
             expect(getResponse.status).toBe(200);
             expect(await getResponse.json()).toEqual(
                 expect.objectContaining({
-                    allowedIPs: ["127.0.0.1"],
+                    allowedIPs: ["127.0.0.1", "*"],
                     permissions: ["READ", "WRITE"],
                 })
             );
+        });
+    });
+
+    it("should delete bin", async () => {
+        const deleteResponse = await requestBuilder()
+            .delete(`/bin/${binId}`)
+            .setQuery("token", token)
+            .exec();
+
+        expect(deleteResponse.status).toBe(200);
+        expect(await deleteResponse.text()).toBe("Deleted bin");
+
+        it("should make bin unretrievable", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}`)
+                .setHeader("Content-Type", "application/json")
+                .setQuery("token", token)
+                .exec();
+
+            expect(getResponse.status).toBe(404);
+            expect(await getResponse.text()).toBe("Bin does not exist");
         });
     });
 });
