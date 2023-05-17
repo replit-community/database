@@ -1,6 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 
-import { createApp, type DisposeApp } from "createApp";
 import { requestBuilder } from "./utils/RequestBuilder";
 import { loginTestUser } from "./utils/testUser";
 
@@ -8,19 +7,11 @@ const binTitle = "Testing Grounds";
 const binDescription = "Awesome Bin";
 
 describe("bin methods", () => {
-    let disposeApp: DisposeApp;
     let token: string;
     let binId: string;
 
     beforeAll(async () => {
-        disposeApp = await createApp();
         token = await loginTestUser().then((res) => res.text());
-    });
-
-    afterAll(async () => {
-        if (disposeApp) {
-            disposeApp();
-        }
     });
 
     it("should create a new bin", async () => {

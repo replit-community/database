@@ -1,20 +1,11 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 
-import { createApp, type DisposeApp } from "createApp";
 import { requestBuilder } from "./utils/RequestBuilder";
 import { createTestUser, loginTestUser } from "./utils/testUser";
 
 describe("User routes", () => {
-    let disposeApp: DisposeApp;
-
     beforeAll(async () => {
-        disposeApp = await createApp();
-    });
-
-    afterAll(async () => {
-        if (disposeApp) {
-            disposeApp();
-        }
+        await createTestUser();
     });
 
     it("Logs into the test user", async () => {

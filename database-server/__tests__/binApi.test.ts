@@ -1,29 +1,21 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 
-import { createApp, type DisposeApp } from "createApp";
 import { requestBuilder } from "./utils/RequestBuilder";
 import { loginTestUser } from "./utils/testUser";
+import type { IBin } from "models/Bin";
 
 describe("bin API key", () => {
-    let disposeApp: DisposeApp;
     let token: string;
     let binId: string;
     let apiKey: string;
 
     beforeAll(async () => {
-        disposeApp = await createApp();
         token = await loginTestUser().then((res) => res.text());
         binId = await requestBuilder()
             .post("/bin")
             .setQuery("token", token)
             .exec()
             .then((res) => res.text());
-    });
-
-    afterAll(async () => {
-        if (disposeApp) {
-            disposeApp();
-        }
     });
 
     it("should fetch bin", async () => {
@@ -64,17 +56,106 @@ describe("bin API key", () => {
 
         it("should retrieve updated api key contents", async () => {
             const getResponse = await requestBuilder()
-                .get(`/bin/${binId}/key/${apiKey}`)
+                .get(`/bin/${binId}`)
                 .setQuery("token", token)
                 .exec();
 
+            const json = (await getResponse.json()) as IBin;
+
             expect(getResponse.status).toBe(200);
-            expect(await getResponse.json()).toEqual(
+            expect(json.apiKeys.find(({ key }) => key === apiKey)).toEqual(
                 expect.objectContaining({
-                    allowedIPs: ["127.0.0.1", "*"],
+                    key: apiKey,
+                    allowedIPs: ["127.0.0.1"],
                     permissions: ["READ", "WRITE"],
                 })
             );
+        });
+    });
+
+    it("should set data", async () => {
+        const setResponse = await requestBuilder()
+            .put(`/bin/${binId}/path`)
+            .setHeader("Authorization", `Bearer ${apiKey}`)
+            .setHeader("Content-Type", "application/json")
+            .setBody("test", "Hello")
+            .setBody("testKey", "Hello World")
+            .exec();
+
+        expect(setResponse.status).toBe(200);
+        expect(await setResponse.text()).toBe("Added keys to data");
+
+        it("should get key", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}/path/test`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec();
+
+            expect(getResponse.status).toBe(200);
+            expect(await getResponse.text()).toBe("Hello");
+        });
+
+        it("should get all data", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}/path`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec();
+
+            expect(getResponse.status).toBe(200);
+            expect(await getResponse.json()).toEqual({
+                test: "Hello",
+                testKey: "Hello World",
+            });
+        });
+
+        it("should get key with prefix", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}/path/prefix/testK`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec();
+
+            expect(getResponse.status).toBe(200);
+            expect(await getResponse.json()).toEqual({
+                testKey: "Hello World",
+            });
+        });
+    });
+
+    it("should delete data", async () => {
+        console.log(
+            await requestBuilder()
+                .get(`/bin/${binId}/path/test`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec()
+                .then((res) => res.text())
+        );
+
+        const deleteResponse = await requestBuilder()
+            .delete(`/bin/${binId}/path/test`)
+            .setHeader("Authorization", `Bearer ${apiKey}`)
+            .exec();
+
+        expect(await deleteResponse.text()).toBe("Deleted path");
+        expect(deleteResponse.status).toBe(200);
+
+        it("should get nothing", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}/path/test`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec();
+
+            expect(getResponse.status).toBe(404);
+            expect(await getResponse.text()).toBe("Path does not exist");
+        });
+
+        it("should delete nothing", async () => {
+            const deleteResponse = await requestBuilder()
+                .delete(`/bin/${binId}/path/test`)
+                .setHeader("Authorization", `Bearer ${apiKey}`)
+                .exec();
+
+            expect(deleteResponse.status).toBe(404);
+            expect(await deleteResponse.text()).toBe("Path does not exist");
         });
     });
 
@@ -86,16 +167,16 @@ describe("bin API key", () => {
 
         expect(deleteResponse.status).toBe(200);
         expect(await deleteResponse.text()).toBe("Deleted bin");
+    });
 
-        it("should make bin unretrievable", async () => {
-            const getResponse = await requestBuilder()
-                .get(`/bin/${binId}`)
-                .setHeader("Content-Type", "application/json")
-                .setQuery("token", token)
-                .exec();
+    it("should make bin unretrievable", async () => {
+        const getResponse = await requestBuilder()
+            .get(`/bin/${binId}`)
+            .setHeader("Content-Type", "application/json")
+            .setQuery("token", token)
+            .exec();
 
-            expect(getResponse.status).toBe(404);
-            expect(await getResponse.text()).toBe("Bin does not exist");
-        });
+        expect(getResponse.status).toBe(404);
+        expect(await getResponse.text()).toBe("Bin does not exist");
     });
 });

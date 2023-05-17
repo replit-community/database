@@ -20,10 +20,10 @@
     -   [x] actually limit hostnames
     -   [ ] api versioning
 
--   [ ] test methods with jest
+-   [x] test methods with jest
 -   [ ] docker
 
 -   [ ] documentation
-    -   [ ] development on server
+    -   [x] development on server
     -   [ ] deploying server
     -   [ ] interacting with database-node
