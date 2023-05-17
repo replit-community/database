@@ -41,7 +41,7 @@ describe("bin methods", () => {
     });
 
     it("should update bin metadata", async () => {
-        const response = await requestBuilder()
+        const updateResponse = await requestBuilder()
             .put(`/bin/${binId}`)
             .setHeader("Content-Type", "application/json")
             .setQuery("token", token)
@@ -49,44 +49,58 @@ describe("bin methods", () => {
             .setBody("description", binDescription)
             .exec();
 
-        expect(response.status).toBe(200);
-        expect(await response.text()).toBe("Successfully updated bin");
-    });
+        expect(updateResponse.status).toBe(200);
+        expect(await updateResponse.text()).toBe("Successfully updated bin");
 
-    it("should retrieve updated metadata", async () => {
-        const response = await requestBuilder()
-            .get(`/bin/${binId}`)
-            .setHeader("Content-Type", "application/json")
-            .setQuery("token", token)
-            .exec();
+        it("should retrieve updated metadata", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}`)
+                .setHeader("Content-Type", "application/json")
+                .setQuery("token", token)
+                .exec();
 
-        expect(response.status).toBe(200);
-        expect(await response.json()).toEqual(
-            expect.objectContaining({
-                _id: binId,
-                title: binTitle,
-                description: binDescription,
-            })
-        );
+            expect(getResponse.status).toBe(200);
+            expect(await getResponse.json()).toEqual(
+                expect.objectContaining({
+                    _id: binId,
+                    title: binTitle,
+                    description: binDescription,
+                })
+            );
+        });
     });
 
     it("should delete bin", async () => {
         const deleteResponse = await requestBuilder()
             .delete(`/bin/${binId}`)
-            .setHeader("Content-Type", "application/json")
             .setQuery("token", token)
             .exec();
 
         expect(deleteResponse.status).toBe(200);
         expect(await deleteResponse.text()).toBe("Deleted bin");
 
-        const getResponse = await requestBuilder()
-            .get(`/bin/${binId}`)
-            .setHeader("Content-Type", "application/json")
-            .setQuery("token", token)
-            .exec();
+        it("should make bin unretrievable", async () => {
+            const getResponse = await requestBuilder()
+                .get(`/bin/${binId}`)
+                .setHeader("Content-Type", "application/json")
+                .setQuery("token", token)
+                .exec();
 
-        expect(getResponse.status).toBe(404);
-        expect(await getResponse.text()).toBe("Bin does not exist");
+            expect(getResponse.status).toBe(404);
+            expect(await getResponse.text()).toBe("Bin does not exist");
+        });
+
+        it("should make updates impossible", async () => {
+            const updateResponse = await requestBuilder()
+                .put(`/bin/${binId}`)
+                .setHeader("Content-Type", "application/json")
+                .setQuery("token", token)
+                .setBody("title", binTitle)
+                .setBody("description", binDescription)
+                .exec();
+
+            expect(updateResponse.status).toBe(404);
+            expect(await updateResponse.text()).toBe("Bin does not exist");
+        });
     });
 });

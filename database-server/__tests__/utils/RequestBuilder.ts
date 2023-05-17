@@ -98,7 +98,7 @@ class RequestBuilder {
      * @param value Body value
      * @returns Instance of builder
      */
-    setBody(key: string, value: string) {
+    setBody(key: string, value: any) {
         if (this.method === Method.GET) {
             throw new Error("Cannot add body to GET method");
         }

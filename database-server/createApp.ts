@@ -51,6 +51,7 @@ export const createApp = async () => {
             server.once("error", (error) => reject(error));
         });
     } catch {}
+
     // dispose function
     return async () => {
         await mongoose.disconnect();
