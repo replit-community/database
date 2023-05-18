@@ -6,6 +6,8 @@ Fully featured Koa backend for database API
 -   Create multiple key-value bins
     -   Create new API keys w/ permissions to interact with bins
 
+The types of requests you can make are outlined in `spec`
+
 ## Development
 
 ```bash
