@@ -1,2 +1,5 @@
-node_modules
+__tests__
+.env
+
+**/node_modules
 npm-debug.log

@@ -22,7 +22,9 @@ npm run dev
 
 ### Testing
 
-I use Vitest to test basic server routes, such as logging in or creating new bins. Unfortunately, it does require the development server to be online (you could technically use `createApp` in `beforeAll` because it does include a dispose function, but the tests are run in parallel and shouldn't impact each other)
+I use Vitest to test basic server routes, such as logging in or creating new bins. It requires the development server to be online, so you could use `npm run dev` or the Docker commands outlined below.
+
+I didn't use use `createApp` in `beforeAll` (I even created a dispose function) because the tests are run in parallel and shouldn't really impact each other.
 
 ```bash
 npm run dev     # start development server
@@ -31,8 +33,7 @@ npm run test    # run test suite
 
 ### Docker
 
-INCOMPLETE
-
 ```bash
-docker compose up
+docker build -t database-server .
+docker run -d -p 3000:3000 --env-file .env database-server
 ```

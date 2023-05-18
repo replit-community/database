@@ -46,8 +46,9 @@ describe("bin API key", () => {
     it("it should update the api key", async () => {
         const updateResponse = await requestBuilder()
             .put(`/bin/${binId}/key/${apiKey}`)
+            .setHeader("Content-Type", "application/json")
             .setQuery("token", token)
-            .setBody("allowedIPs", ["127.0.0.1"])
+            .setBody("allowedIPs", ["*"])
             .setBody("permissions", ["READ", "WRITE"])
             .exec();
 
@@ -66,7 +67,7 @@ describe("bin API key", () => {
             expect(json.apiKeys.find(({ key }) => key === apiKey)).toEqual(
                 expect.objectContaining({
                     key: apiKey,
-                    allowedIPs: ["127.0.0.1"],
+                    allowedIPs: ["*"],
                     permissions: ["READ", "WRITE"],
                 })
             );
@@ -122,14 +123,6 @@ describe("bin API key", () => {
     });
 
     it("should delete data", async () => {
-        console.log(
-            await requestBuilder()
-                .get(`/bin/${binId}/path/test`)
-                .setHeader("Authorization", `Bearer ${apiKey}`)
-                .exec()
-                .then((res) => res.text())
-        );
-
         const deleteResponse = await requestBuilder()
             .delete(`/bin/${binId}/path/test`)
             .setHeader("Authorization", `Bearer ${apiKey}`)
