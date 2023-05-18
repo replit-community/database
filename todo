@@ -18,7 +18,7 @@
 
     -   [x] confirm password
     -   [x] actually limit hostnames
-    -   [ ] api versioning
+    -   [x] api versioning
 
 -   [x] test methods with jest
 -   [ ] docker
