@@ -2,7 +2,7 @@
 POST http://localhost:3000/api/v1/bin
 
 ### Get bin
-GET http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b
+GET http://localhost:3000/api/v1/bin/64a5edf25ac9434460712567
 
 ### Update bin metadata (not keys)
 PUT http://localhost:3000/api/v1/bin/6462bfc9f4ec647fd371bd5b

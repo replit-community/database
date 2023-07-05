@@ -2,38 +2,47 @@
     "name": "database-server",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "source": "./src/index.ts",
+    "module": "./dist/index.module.js",
     "scripts": {
         "test": "vitest",
-        "coverage": "vitest run --coverage",
-        "dev:ts": "tsc --watch",
-        "dev:js": "nodemon ./dist/index.js",
-        "dev": "concurrently --kill-others 'npm:dev:*'",
-        "build": "tsc --build --clean",
-        "start": "node ./dist/index.js"
+        "check": "tsc --noEmit",
+        "build": "tsc && resolve-tspaths",
+        "start": "node dist/index.js",
+        "dev": "tsx watch src/index.ts"
+    },
+    "alias": {
+        "http": false,
+        "crypto": false,
+        "~/*": "./src/*"
+    },
+    "engines": {
+        "node": ">=18"
     },
     "keywords": [],
-    "author": "",
+    "author": "Nathan Pham <nathanpham.me@gmail.com>",
     "license": "ISC",
     "dependencies": {
         "@koa/cors": "^4.0.0",
         "@koa/router": "^12.0.0",
-        "@types/koa-bodyparser": "^4.3.10",
+        "@replit-community/rock-salt": "^1.0.2",
+        "dotenv": "^16.3.1",
+        "jsonwebtoken": "^9.0.0",
         "koa": "^2.14.2",
-        "koa-bodyparser": "^4.4.0",
-        "mongoose": "^7.1.1",
-        "vite-tsconfig-paths": "^4.2.0",
-        "vitest": "^0.31.0",
+        "koa-bodyparser": "^4.4.1",
+        "mongoose": "^7.3.1",
         "zod": "^3.21.4"
     },
     "devDependencies": {
         "@types/koa": "^2.13.6",
+        "@types/koa-bodyparser": "^4.3.10",
         "@types/koa__cors": "^4.0.0",
         "@types/koa__router": "^12.0.0",
-        "@types/node": "^20.1.4",
-        "concurrently": "^8.0.1",
+        "@types/node": "^20.3.3",
         "node-fetch": "^3.3.1",
-        "nodemon": "^2.0.22",
-        "typescript": "^5.0.4"
+        "resolve-tspaths": "^0.8.14",
+        "tsx": "^3.12.7",
+        "typescript": "^5.1.6",
+        "vitest": "^0.32.2"
     }
 }

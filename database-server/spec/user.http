@@ -3,7 +3,7 @@ POST http://localhost:3000/api/v1/user
 Content-Type: application/json
 
 { 
-    "username": "phamn23", 
+    "username": "Nathan", 
     "password": "Hello World",
     "confirmPassword": "Hello World"
 }
@@ -13,7 +13,7 @@ POST http://localhost:3000/api/v1/user/login
 Content-Type: application/json
 
 { 
-    "username": "phamn23", 
+    "username": "Nathan", 
     "password": "Hello World" 
 }
 

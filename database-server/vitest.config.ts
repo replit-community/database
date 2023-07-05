@@ -1,9 +1,8 @@
-import { defineConfig } from "vitest/config";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig, configDefaults } from "vitest/config";
 
+// https://stackoverflow.com/questions/74088103/vitest-how-to-exclude-specific-files-and-folders
 export default defineConfig({
-    plugins: [tsconfigPaths()],
     test: {
-        environment: "node",
+        exclude: [...configDefaults.exclude, "**/__utils__/**"],
     },
 });
