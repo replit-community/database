@@ -1,3 +1,34 @@
+:root {
+    /* https://fontjoy.com/ */
+    --font-work-sans: "Work Sans", sans-serif;
+    --font-kanit: "Kanit", sans-serif;
+    --font-lora: "Lora", serif;
+
+    /* https://coolors.co/2b4162-385f71-f5f0f6-d7b377-8f754f */
+    --color-primary-darker: #2b4162;
+    --color-primary: #385f71;
+    --color-white: #f7f5f7;
+    --color-secondary: #d7b377;
+    --color-secondary-darker: #8f754f;
+}
+
+html,
+body {
+    background-color: var(--color-white);
+    font-family: var(--font-lora);
+    line-height: 1.3;
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-work-sans);
+}
+
 *,
 ::before,
 ::after {

@@ -15,3 +15,12 @@
         <FeatureItem text={feature} />
     {/each}
 </ul>
+
+<style>
+    .features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+</style>
