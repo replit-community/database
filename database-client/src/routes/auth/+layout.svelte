@@ -9,7 +9,7 @@
     <div class="content">
         <aside class="content__features">
             <p class="content__features__description">
-                Replit Community (Dev) Database is a simple and incredibly easy to use key-value
+                Replit Community Database is a simple and incredibly easy to use key-value
                 database solution for your Replit apps. Free, forever.
             </p>
 

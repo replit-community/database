@@ -1,7 +1,7 @@
 {
     "name": "database-server",
     "version": "1.0.0",
-    "description": "",
+    "description": "Backend for Replit Community Database",
     "source": "./src/index.ts",
     "module": "./dist/index.module.js",
     "scripts": {
